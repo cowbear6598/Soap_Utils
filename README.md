@@ -2,7 +2,7 @@
 
 ## UpdateManager
 
-- 使用 UpdateManager.Instance.RequestUpdate / Remove 來將要每偵要更新的 Function 加入
+- 使用 UpdateManager.Instance.Add / Remove 來將要每偵要更新的 Function 加入
 - 目前只包含常用的 Update & FixedUpdate
 
 ## SoapUtils
