@@ -1,9 +1,14 @@
 {
   "name": "com.funtech.soap-utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Soap's Utils",
-  "description": "\u81ea\u5df1\u5e38\u7528\u7684\u5c0f\u529f\u80fd",
+  "description": "My utils function",
   "unity": "2019.3",
+  "author": {
+    "name": "Soap",
+    "email": "cowbear6598@gmail.com",
+    "url": "https://github.com/cowbear6598/Soap_Utils.git"
+  },
   "keywords": [
     "tools",
     "soap"

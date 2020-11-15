@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Soap.Update
+namespace Soap.Utils
 {
     public class UpdateManager : SingletonMonoBehaviour<UpdateManager>
     {

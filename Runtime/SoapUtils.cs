@@ -6,7 +6,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Soap.Tools
+namespace Soap.Utils
 {
 	public static class SoapUtils
 	{
