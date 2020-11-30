@@ -51,12 +51,12 @@ namespace Soap.Utils
             }
         }
 
-        private void OnApplicationQuit()
+        protected virtual void OnApplicationQuit()
         {
             IsShuttingDown = true;
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             IsShuttingDown = true;
         }
