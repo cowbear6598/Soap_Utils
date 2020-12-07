@@ -89,5 +89,67 @@ namespace Soap.Utils
 		}
 
 		#endregion
+
+		/// <summary>
+		/// 給予頂點高度、重力計算到目標的拋物線
+		/// </summary>
+		public static Vector3 CalculateParabolaWithTwoDots(Vector3 _pos, Vector3 _targetPos, float _height, float _gravity, bool _drawPath = false)
+		{
+			// 計算位移量
+			float displacementY = _targetPos.y - _pos.y;
+			Vector3 displacementXZ = new Vector3(_targetPos.x - _pos.x, 0, _targetPos.z - _pos.z);
+
+			// 計算時間
+			float time = (Mathf.Sqrt(-2 * _height / _gravity) + Mathf.Sqrt(2 * (displacementY - _height) / _gravity));
+			
+			// 計算速度
+			Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * _gravity * _height);
+			Vector3 velocityXZ = displacementXZ / time;
+
+			Vector3 initVelocity = velocityY * -Mathf.Sign(_gravity) + velocityXZ;
+			
+			if (_drawPath)
+			{
+				int resolution = 30;
+
+				Vector3 previousDrawPoint = _pos;
+				
+				for (int i = 0; i < resolution; i++)
+				{
+					float simulationTime = i / (float) resolution * time;
+					Vector3 displacement = initVelocity * simulationTime + Vector3.up * (_gravity * simulationTime * simulationTime) / 2;
+					Vector3 drawPoint = _pos + displacement;
+
+					Debug.DrawLine(previousDrawPoint, drawPoint, Color.green, 10);
+					previousDrawPoint = drawPoint;
+				}
+			}
+			
+			return initVelocity;
+		}
+		
+		public static Vector3 FindClosetPointOnLine(Vector3 _linePoint1, Vector3 _linePoint2, Vector3 _pos)
+		{
+			Vector3 lineVector = _linePoint2 - _linePoint1;
+
+			float lineVectorSqrMag = lineVector.sqrMagnitude;
+
+			float dot = Vector3.Dot(lineVector, _linePoint1 - _pos);
+			float t = dot / lineVectorSqrMag;
+
+			return _linePoint1 + Mathf.Clamp01(t) * lineVector;
+		}
+
+		public static Vector2 FindClosetPointOnLine(Vector2 _linePoint1, Vector2 _linePoint2, Vector2 _pos)
+		{
+			Vector2 lineVector = _linePoint2 - _linePoint1;
+
+			float lineVectorSqrMag = lineVector.sqrMagnitude;
+
+			float dot = Vector3.Dot(lineVector, _linePoint1 - _pos);
+			float t = dot / lineVectorSqrMag;
+
+			return _linePoint1 + Mathf.Clamp01(t) * lineVector;
+		}
 	}
 }
