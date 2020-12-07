@@ -135,7 +135,7 @@ namespace Soap.Utils
 			float lineVectorSqrMag = lineVector.sqrMagnitude;
 
 			float dot = Vector3.Dot(lineVector, _linePoint1 - _pos);
-			float t = dot / lineVectorSqrMag;
+			float t = -dot / lineVectorSqrMag;
 
 			return _linePoint1 + Mathf.Clamp01(t) * lineVector;
 		}
@@ -146,8 +146,8 @@ namespace Soap.Utils
 
 			float lineVectorSqrMag = lineVector.sqrMagnitude;
 
-			float dot = Vector3.Dot(lineVector, _linePoint1 - _pos);
-			float t = dot / lineVectorSqrMag;
+			float dot = Vector2.Dot(lineVector, _linePoint1 - _pos);
+			float t = -dot / lineVectorSqrMag;
 
 			return _linePoint1 + Mathf.Clamp01(t) * lineVector;
 		}
