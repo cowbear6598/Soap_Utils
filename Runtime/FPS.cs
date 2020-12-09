@@ -7,9 +7,9 @@ namespace Soap.Utils
 {
     public class FPS : MonoBehaviour
     {
-        [SerializeField] private float showRate = 1f;
+        [SerializeField] private float showRate = 0.2f;
+        private float lastUpdateFrameTime = 0;
         private int frameCount = 0;
-        private float deltaTime = 0;
         private float fps;
         
         private void OnGUI()
@@ -24,17 +24,20 @@ namespace Soap.Utils
             });
         }
 
+        private void Awake()
+        {
+            lastUpdateFrameTime = Time.realtimeSinceStartup;
+        }
+
         private void Update()
         {
             frameCount++;
 
-            deltaTime += Time.deltaTime;
-
-            if (deltaTime >= showRate)
-            { 
-                fps = frameCount / deltaTime;
-                deltaTime = 0;
+            if (Time.realtimeSinceStartup - lastUpdateFrameTime >= showRate)
+            {
+                fps = frameCount / (Time.realtimeSinceStartup - lastUpdateFrameTime);
                 frameCount = 0;
+                lastUpdateFrameTime = Time.realtimeSinceStartup;
             }
         }
     }

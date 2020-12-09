@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -90,9 +91,6 @@ namespace Soap.Utils
 
 		#endregion
 
-		/// <summary>
-		/// 給予頂點高度、重力計算到目標的拋物線
-		/// </summary>
 		public static Vector3 CalculateParabolaWithTwoDots(Vector3 _pos, Vector3 _targetPos, float _height, float _gravity, bool _drawPath = false)
 		{
 			// 計算位移量
@@ -126,6 +124,38 @@ namespace Soap.Utils
 			}
 			
 			return initVelocity;
+		}
+
+		public static Vector3[] GetTrajectoryPoints(Vector3 _startPos, Vector2 _velocity,float _gravity, float _time, int _resolution)
+		{
+			// 註解為分解詳細版
+			
+			Vector3[] outputPos = new Vector3[_resolution];
+			outputPos[0] = _startPos;
+			
+			// 算發射的力道（x力、y力相等 _velocity）
+			// float force = Mathf.Sqrt(_velocity.x * _velocity.x + _velocity.y * _velocity.y);
+			
+			// 算發射角度
+			// float angle = Mathf.Atan2(_velocity.y, _velocity.x) * Mathf.Rad2Deg;
+
+			for (int i = 1; i < _resolution; i++)
+			{
+				float simulationTime = i / (float)_resolution * _time;
+
+				Vector3 displacement = _velocity * simulationTime + Vector2.up * (_gravity * simulationTime * simulationTime) / 2;
+
+				outputPos[i] = _startPos + displacement;
+
+				// s = v0t + at^2/2、Fx = F * cos、Fy = F * sin
+				// 計算分力時，把角度換成弧度（相同十進制好算）
+				// float displacementX = force * Mathf.Cos(angle * Mathf.Deg2Rad) * simulationTime;
+				// float displacementY = force * Mathf.Sin(angle * Mathf.Deg2Rad) * simulationTime + _gravity * simulationTime * simulationTime / 2;
+
+				// outputPos[i] = new Vector3(_startPos.x + displacementX, _startPos.y + displacementY, 0);
+			}
+
+			return outputPos;
 		}
 		
 		public static Vector3 FindClosetPointOnLine(Vector3 _linePoint1, Vector3 _linePoint2, Vector3 _pos)
