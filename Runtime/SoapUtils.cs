@@ -200,5 +200,11 @@ namespace Soap.Utils
 			seed = (a * seed + c) % m;
 			return seed;
 		}
+
+		public long Next(long _maxValue)
+		{
+			seed = (a * seed + c) % m;
+			return seed % _maxValue;
+		}
 	}
 }
