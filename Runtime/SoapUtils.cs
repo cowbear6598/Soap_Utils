@@ -182,4 +182,23 @@ namespace Soap.Utils
 			return _linePoint1 + Mathf.Clamp01(t) * lineVector;
 		}
 	}
+	
+	public class LCGRandomGenerator
+	{
+		private long seed;
+		private long a = 1664525;
+		private long c = 1013904223;
+		private long m = 4294967296;
+
+		public LCGRandomGenerator()
+		{
+			seed = DateTime.Now.Ticks % m;
+		}
+
+		public long Next()
+		{
+			seed = (a * seed + c) % m;
+			return seed;
+		}
+	}
 }
